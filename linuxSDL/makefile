@@ -11,6 +11,8 @@ CC=g++ -o zicPureData
 ZIC_TARGET=0
 #ZIC_SDL_MIXER=-l SDL2_mixer -DZIC_SDL_MIXER=1
 LV2=`pkg-config --libs lilv-0` -I/usr/include/lilv-0
+PUREDATA=-DPD -DHAVE_UNISTD_H -DUSEAPI_DUMMY ../libpd/libs/libpdcpp.so -I../libpd/pure-data/src -I../libpd/libpd_wrapper -I../libpd/cpp
+#-I./src -std=c++11 -DLIBPD_USE_STD_MUTEX -O3
 
 RG351_IP=192.168.1.111
 
@@ -44,7 +46,7 @@ rg351Log:
 	sshpass -p "ark" ssh ark@$(RG351_IP) tail -f /roms/ports/zic/zic.log
 
 build:
-	$(CC) -Wall zicPureData.cpp -fopenmp -Wno-narrowing -I$(ZIC_LIB) -I$(ZIC_APP_CORE_LIB) `$(SDL_CONFIG) --cflags --libs` $(LV2)  -DZIC_TARGET=$(ZIC_TARGET) $(ZIC_SDL_MIXER)
+	$(CC) -Wall zicPureData.cpp -fopenmp -Wno-narrowing -I$(ZIC_LIB) -I$(ZIC_APP_CORE_LIB) `$(SDL_CONFIG) --cflags --libs` $(LV2)  -DZIC_TARGET=$(ZIC_TARGET) $(ZIC_SDL_MIXER) $(PUREDATA) -o zicPureData
 
 # -fopenmp for soundTouch "warning: ignoring #pragma omp parallel"
 # -Wno-narrowing for font.h:62:56: warning: narrowing conversion of ‘(8 * ((int)size))’ from ‘int’ to ‘Uint16’ {aka ‘short unsigned int’} inside { } [-Wnarrowing]

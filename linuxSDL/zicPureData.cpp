@@ -1,5 +1,7 @@
 #include <APP_SDL/sdl2.h>
 
+#include "../libpd/cpp/PdBase.hpp"
+
 #include "../app/app.h"
 #include "../app/app_def.h"
 #include <app_core_display.h>
@@ -7,6 +9,8 @@
 
 UI_Display display;
 App app(&display);
+
+pd::PdBase lpd;
 
 void audioCallBack(void* userdata, Uint8* stream, int len)
 {
