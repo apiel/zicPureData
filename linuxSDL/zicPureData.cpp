@@ -15,36 +15,41 @@ pd::PdBase lpd;
 
 void audioCallBack(void* userdata, Uint8* stream, int len)
 {
-    //     static union sampleTUNT {
-    //         Uint8 ch[2];
-    //         int16_t sample;
-    //     } sampleDataU;
-
-    //     for (int i = 0; i < len; i++) {
-    //         sampleDataU.sample = app.sample();
-    //         stream[i] = sampleDataU.ch[0];
-    //         i++;
-    //         stream[i] = sampleDataU.ch[1];
-
-    // #if CHANNELS == 2
-    //         i++;
-    //         stream[i] = sampleDataU.ch[0];
-    //         i++;
-    //         stream[i] = sampleDataU.ch[1];
-    // #endif
-    //     }
-
-    // short outBuffer[len];
-    // lpd.processShort(len, NULL, (short*)stream);
-    // lpd.processShort(len, NULL, outBuffer);
-
-    // short outBuffer1;
-    // lpd.processShort(1, NULL, &outBuffer1);
 
     // short outBuffer[1024];
     // lpd.processShort(1, NULL, &outBuffer[0]);
 
-    lpd.processShort(len / 64, NULL, (short*)stream);
+    // lpd.processShort(len / 64, NULL, (short*)stream);
+
+    int ticks = len / 64;
+    short output[APP_AUDIO_CHUNK * 4];
+    lpd.processShort(ticks, NULL, &output[0]);
+
+    // for(i=0; i<nframes; i++){
+    //    *out1 = output[i*2];
+    //    *out2 = output[(i*2)+1];
+    //    out1++;
+    //    out2++;
+    // }
+
+    static union sampleTUNT {
+        Uint8 ch[2];
+        int16_t sample;
+    } sampleDataU;
+
+    for (int i = 0; i < len; i++) {
+        sampleDataU.sample = output[i*2];
+        stream[i] = sampleDataU.ch[0];
+        i++;
+        stream[i] = sampleDataU.ch[1];
+
+#if CHANNELS == 2
+        i++;
+        stream[i] = sampleDataU.ch[0];
+        i++;
+        stream[i] = sampleDataU.ch[1];
+#endif
+    }
 }
 
 int main(int argc, char* args[])
