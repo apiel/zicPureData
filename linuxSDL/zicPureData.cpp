@@ -1,3 +1,5 @@
+#define CHANNELS 1
+
 #include <APP_SDL/sdl2.h>
 
 #include "../../libpd/cpp/PdBase.hpp"
@@ -15,22 +17,9 @@ pd::PdBase lpd;
 
 void audioCallBack(void* userdata, Uint8* stream, int len)
 {
-
-    // short outBuffer[1024];
-    // lpd.processShort(1, NULL, &outBuffer[0]);
-
-    // lpd.processShort(len / 64, NULL, (short*)stream);
-
     int ticks = len / 64;
     short output[APP_AUDIO_CHUNK * 4];
     lpd.processShort(ticks, NULL, &output[0]);
-
-    // for(i=0; i<nframes; i++){
-    //    *out1 = output[i*2];
-    //    *out2 = output[(i*2)+1];
-    //    out1++;
-    //    out2++;
-    // }
 
     static union sampleTUNT {
         Uint8 ch[2];
@@ -38,7 +27,7 @@ void audioCallBack(void* userdata, Uint8* stream, int len)
     } sampleDataU;
 
     for (int i = 0; i < len; i++) {
-        sampleDataU.sample = output[i*2];
+        sampleDataU.sample = output[i];
         stream[i] = sampleDataU.ch[0];
         i++;
         stream[i] = sampleDataU.ch[1];
@@ -56,7 +45,7 @@ int main(int argc, char* args[])
 {
     SDL_Log(">>>>>>> Start Zic Synth\n");
 
-    if (!lpd.init(0, 2, SAMPLE_RATE)) {
+    if (!lpd.init(0, CHANNELS, SAMPLE_RATE)) {
         SDL_Log("Could not init pd\n");
         return 1;
     }
