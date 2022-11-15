@@ -11,7 +11,7 @@ CC=g++ -o zicPureData
 ZIC_TARGET=0
 #ZIC_SDL_MIXER=-l SDL2_mixer -DZIC_SDL_MIXER=1
 LV2=`pkg-config --libs lilv-0` -I/usr/include/lilv-0
-PUREDATA=-DPD -DHAVE_UNISTD_H -DUSEAPI_DUMMY ../libpd/libs/libpdcpp.so -I../libpd/pure-data/src -I../libpd/libpd_wrapper -I../libpd/cpp
+PUREDATA=-DPD -DHAVE_UNISTD_H -DUSEAPI_DUMMY ../../libpd/libs/libpdcpp.so -I../../libpd/pure-data/src -I../../libpd/libpd_wrapper -I../../libpd/cpp
 #-I./src -std=c++11 -DLIBPD_USE_STD_MUTEX -O3
 
 RG351_IP=192.168.1.111
