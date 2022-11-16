@@ -1,4 +1,7 @@
 #define CHANNELS 1
+// #define CHANNELS 2
+#define APP_AUDIO_FORMAT AUDIO_F32LSB
+// #define APP_AUDIO_CHUNK 2048
 
 #include <APP_SDL/sdl2.h>
 
@@ -18,6 +21,13 @@ pd::PdBase lpd;
 
 void audioCallBack(void* userdata, Uint8* stream, int len)
 {
+#if APP_AUDIO_FORMAT == AUDIO_F32LSB
+    int ticks = len / 256;
+    float* buf = (float*)stream;
+    lpd.processFloat(ticks, NULL, buf);
+
+#else
+
     int ticks = len / 64;
     short output[APP_AUDIO_CHUNK * 4];
     lpd.processShort(ticks, NULL, &output[0]);
@@ -40,6 +50,8 @@ void audioCallBack(void* userdata, Uint8* stream, int len)
         stream[i] = sampleDataU.ch[1];
 #endif
     }
+
+#endif
 }
 
 int main(int argc, char* args[])
