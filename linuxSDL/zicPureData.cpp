@@ -81,7 +81,8 @@ int main(int argc, char* args[])
     app.render();
     SDL_UpdateWindowSurface(window);
 
-    pd::Patch patch = lpd.openPatch("test.pd", "./");
+    // pd::Patch patch = lpd.openPatch("test.pd", "./");
+    pd::Patch patch = lpd.openPatch("hello.pd", "./");
 
     while (handleEvent()) {
         if (ui.keysChanged) {
