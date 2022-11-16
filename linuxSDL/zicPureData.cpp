@@ -1,5 +1,4 @@
-#define CHANNELS 1
-// #define CHANNELS 2
+#define CHANNELS 2
 #define APP_AUDIO_FORMAT AUDIO_F32LSB
 // #define APP_AUDIO_CHUNK 2048
 
@@ -19,39 +18,13 @@ App app(&display);
 pd::PdBase lpd;
 // PdObject pdObject;
 
+float tickDivider = 1.0f / (256.0f * CHANNELS);
+
 void audioCallBack(void* userdata, Uint8* stream, int len)
 {
-#if APP_AUDIO_FORMAT == AUDIO_F32LSB
-    int ticks = len / 256;
+    int ticks = len * tickDivider;
     float* buf = (float*)stream;
     lpd.processFloat(ticks, NULL, buf);
-
-#else
-
-    int ticks = len / 64;
-    short output[APP_AUDIO_CHUNK * 4];
-    lpd.processShort(ticks, NULL, &output[0]);
-
-    static union sampleTUNT {
-        Uint8 ch[2];
-        int16_t sample;
-    } sampleDataU;
-
-    for (int i = 0; i < len; i++) {
-        sampleDataU.sample = output[i];
-        stream[i] = sampleDataU.ch[0];
-        i++;
-        stream[i] = sampleDataU.ch[1];
-
-#if CHANNELS == 2
-        i++;
-        stream[i] = sampleDataU.ch[0];
-        i++;
-        stream[i] = sampleDataU.ch[1];
-#endif
-    }
-
-#endif
 }
 
 int main(int argc, char* args[])
