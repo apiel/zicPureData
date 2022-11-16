@@ -91,10 +91,10 @@ public:
     Zic_Mod_Adsr adsr[APP_SYNTH_ENV_COUNT];
 
     App_Synth_Patch patches[APP_SYNTH_PATCHE_COUNT] = {
-        { ENV_OUT, 0, OSC_AMPLITUDE, 0 },
-        { OSC_OUT, 0, FILTER_INPUT, 0 },
-        { NO_OUT },
-        { NO_OUT }
+        // { ENV_OUT, 0, OSC_AMPLITUDE, 0 },
+        // { OSC_OUT, 0, FILTER_INPUT, 0 },
+        // { NO_OUT, 0, 0 , 0 },
+        // { NO_OUT, 0, 0 , 0 }
     };
 
     int16_t sample()

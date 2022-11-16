@@ -2,7 +2,8 @@
 
 #include <APP_SDL/sdl2.h>
 
-#include "../../libpd/cpp/PdBase.hpp"
+// #include "../../libpd/cpp/PdBase.hpp"
+#include <PdBase.hpp>
 
 #include "../app/app.h"
 #include "../app/app_def.h"
