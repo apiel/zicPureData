@@ -12,6 +12,8 @@ ZIC_TARGET=0
 #ZIC_SDL_MIXER=-l SDL2_mixer -DZIC_SDL_MIXER=1
 # LV2=`pkg-config --libs lilv-0` -I/usr/include/lilv-0
 
+# For libpdcpp_arm.so, we should first chroot into the arm environment
+# and then compile everything again, finally rename it as libpdcpp_arm.so
 PUREDATA=-DPD -DHAVE_UNISTD_H -DUSEAPI_DUMMY ./libpdcpp.so -I../../libpd/pure-data/src -I../../libpd/libpd_wrapper -I../../libpd/cpp
 
 RG351_IP=192.168.1.108
