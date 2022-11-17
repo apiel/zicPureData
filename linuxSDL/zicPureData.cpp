@@ -36,7 +36,7 @@ int main(int argc, char* args[])
         return 1;
     }
     // lpd.setReceiver(&pdObject);
-    lpd.subscribe("cursor");
+    // lpd.subscribe("cursor");
     lpd.computeAudio(true);
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
@@ -66,8 +66,8 @@ int main(int argc, char* args[])
     app.render();
     SDL_UpdateWindowSurface(window);
 
-    // pd::Patch patch = lpd.openPatch("test.pd", "./");
-    pd::Patch patch = lpd.openPatch("hello.pd", "./");
+    pd::Patch patch = lpd.openPatch("test.pd", "./");
+    // pd::Patch patch = lpd.openPatch("hello.pd", "./");
 
     while (handleEvent()) {
         if (ui.keysChanged) {
