@@ -17,8 +17,8 @@
 #X obj 390 491 *~;
 #X obj 391 404 osc~;
 #X obj 390 320 unpack 0 0;
-#X obj 76 72 mtof;
-#X obj 124 65 / 127;
+#X obj 76 60 mtof;
+#X obj 115 59 / 127;
 #X connect 0 0 1 0;
 #X connect 0 0 1 1;
 #X connect 2 0 0 0;
