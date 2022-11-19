@@ -1,4 +1,4 @@
-#N canvas -10 -8 960 983 12;
+#N canvas 135 107 397 677 12;
 #X obj 187 492 *~ 0.2;
 #X obj 190 563 dac~;
 #X obj 76 10 notein;
@@ -11,6 +11,7 @@
 #X obj 143 365 synth;
 #X obj 213 366 synth;
 #X obj 285 366 synth;
+#X obj 70 629 vcf~;
 #X connect 0 0 1 0;
 #X connect 0 0 1 1;
 #X connect 2 0 6 0;
