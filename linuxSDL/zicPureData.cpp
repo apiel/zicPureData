@@ -1,4 +1,4 @@
-#define CHANNELS 2
+#define APP_CHANNELS 2
 #define APP_AUDIO_FORMAT AUDIO_F32LSB
 // #define APP_AUDIO_CHUNK 2048
 
@@ -20,7 +20,7 @@ PdObject pdObject;
 App app(&display, &lpd);
 // App app(&display);
 
-float tickDivider = 1.0f / (256.0f * CHANNELS);
+float tickDivider = 1.0f / (256.0f * APP_CHANNELS);
 
 void audioCallBack(void* userdata, Uint8* stream, int len)
 {
@@ -33,7 +33,7 @@ int main(int argc, char* args[])
 {
     SDL_Log(">>>>>>> Start Zic Synth\n");
 
-    if (!lpd.init(0, CHANNELS, SAMPLE_RATE)) {
+    if (!lpd.init(0, APP_CHANNELS, SAMPLE_RATE)) {
         SDL_Log("Could not init pd\n");
         return 1;
     }
