@@ -1,4 +1,4 @@
-#N canvas 367 107 682 707 12;
+#N canvas 176 159 682 707 12;
 #X obj 175 626 dac~;
 #X obj 157 35 notein;
 #X obj 154 112 mtof;
@@ -9,11 +9,6 @@
 #X obj 25 219 print velo \$1;
 #X obj 174 478 synth;
 #X obj 157 264 pack 0 0;
-#X obj 357 456 *~;
-#X obj 358 369 osc~;
-#X obj 358 284 unpack 0 0;
-#X obj 442 349 1;
-#X obj 403 380 adsr;
 #X connect 1 0 2 0;
 #X connect 1 1 3 0;
 #X connect 2 0 6 0;
@@ -24,10 +19,4 @@
 #X connect 4 0 0 1;
 #X connect 5 0 8 1;
 #X connect 8 0 4 0;
-#X connect 9 0 12 0;
-#X connect 10 0 4 0;
-#X connect 11 0 10 0;
-#X connect 12 0 11 0;
-#X connect 12 1 14 0;
-#X connect 13 0 14 1;
-#X connect 14 0 10 1;
+#X connect 9 0 8 0;

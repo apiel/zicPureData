@@ -44,6 +44,8 @@ public:
         }
     }
 
+    bool noteIsOn = false;
+
     void handleUi(uint16_t keysBin)
     {
         keys.Up = (keysBin >> UI_KEY_UP) & 1;
@@ -56,23 +58,16 @@ public:
 
         // SDL_Log("%d%d%d%d%d%d%d\n", keys.Up, keys.Down, keys.Left, keys.Right, keys.Edit, keys.Menu, keys.Action);
 
-        // might need to move the logic?
-        // if (keys.Action) {
-        //     printf("Action on\n");
-        //     synth.adsr[0].on();
-        // } else if (synth.adsr[0].isOn()) {
-        //     printf("Action off\n");
-        //     synth.adsr[0].off();
-        // }
         if (keys.Action) {
-            printf("Action on\n");
-            pd->sendNoteOn(1, 60, 100);
-            pd->sendFloat("noteFromCpp", 60);
-            pd->sendFloat("veloFromCpp", 100);
+            if (!noteIsOn) {
+                pd->sendNoteOn(1, 60, 100);
+                noteIsOn = true;
+            }
         } else {
-            pd->sendNoteOn(1, 60, 0);
-            pd->sendFloat("noteFromCpp", 60);
-            pd->sendFloat("veloFromCpp", 0);
+            if (noteIsOn) {
+                pd->sendNoteOn(1, 60, 0);
+                noteIsOn = false;
+            }
         }
 
         if (synthView.update(&keys, display) != VIEW_NONE) {

@@ -70,7 +70,8 @@ int main(int argc, char* args[])
     lpd.subscribe("cursor");
 
     // pd::Patch patch = lpd.openPatch("test.pd", "./");
-    pd::Patch patch = lpd.openPatch("hello2.pd", "./");
+    // pd::Patch patch = lpd.openPatch("hello2.pd", "./");
+    pd::Patch patch = lpd.openPatch("hello.pd", "./");
 
     while (handleEvent()) {
         if (ui.keysChanged) {
