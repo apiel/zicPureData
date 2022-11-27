@@ -4,7 +4,7 @@
 
 #include <APP_SDL/sdl2.h>
 
-// #include "../../libpd/cpp/PdBase.hpp"
+#include "./PdObject.h"
 #include <PdBase.hpp>
 
 #include "../app/app.h"
@@ -13,10 +13,12 @@
 #include <app_core_file.h>
 
 UI_Display display;
-App app(&display);
 
 pd::PdBase lpd;
-// PdObject pdObject;
+PdObject pdObject;
+
+App app(&display, &lpd);
+// App app(&display);
 
 float tickDivider = 1.0f / (256.0f * CHANNELS);
 
@@ -35,8 +37,6 @@ int main(int argc, char* args[])
         SDL_Log("Could not init pd\n");
         return 1;
     }
-    // lpd.setReceiver(&pdObject);
-    // lpd.subscribe("cursor");
     lpd.computeAudio(true);
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
@@ -66,8 +66,11 @@ int main(int argc, char* args[])
     app.render();
     SDL_UpdateWindowSurface(window);
 
-    pd::Patch patch = lpd.openPatch("test.pd", "./");
-    // pd::Patch patch = lpd.openPatch("hello.pd", "./");
+    lpd.setReceiver(&pdObject);
+    lpd.subscribe("cursor");
+
+    // pd::Patch patch = lpd.openPatch("test.pd", "./");
+    pd::Patch patch = lpd.openPatch("hello2.pd", "./");
 
     while (handleEvent()) {
         if (ui.keysChanged) {
@@ -84,6 +87,8 @@ int main(int argc, char* args[])
         // short outBuffer1;
         // lpd.processShort(1, NULL, &outBuffer1);
         // printf("outBuffer1: %d\n", outBuffer1);
+
+        // lpd.receiveMessages();
     }
     app.quit();
 
